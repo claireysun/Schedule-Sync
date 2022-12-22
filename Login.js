@@ -23,10 +23,14 @@ const Login = () => {
             Alert.alert('Please fill in all fields');
         }
         else {
-            Alert.alert('pressed!');
+            Alert.alert('TODO: process info...');
             console.log("email:", email);
             console.log("password:", password);
         }
+    }
+
+    const handleCreateAcc = () => {
+        Alert.alert('TODO: new acc...');
     }
 
     // const onLayoutRootView = React.useCallback(async () => {
@@ -42,25 +46,32 @@ const Login = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.card}>
-                <Text style={styles.titleText}>hello again!</Text>
-                <TextInput 
-                    placeholder="email"
-                    onChangeText={onChangeEmail}
-                    value={email}
-                    style={styles.inputText} 
-                    placeholderTextColor={'#8E8E8E'}
-                />
-                <TextInput
-                    placeholder="password"
-                    onChangeText={onChangePassword}
-                    value={password}
-                    style={styles.inputText}
-                    placeholderTextColor={'#8E8E8E'}
-                />
-                <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
-                    <Text style={styles.loginText}>
-                        log in
+            <View>
+                <View style={styles.card}>
+                    <Text style={styles.titleText}>hello again!</Text>
+                    <TextInput 
+                        placeholder="email"
+                        onChangeText={onChangeEmail}
+                        value={email}
+                        style={styles.inputText} 
+                        placeholderTextColor={'#8E8E8E'}
+                    />
+                    <TextInput
+                        placeholder="password"
+                        onChangeText={onChangePassword}
+                        value={password}
+                        style={styles.inputText}
+                        placeholderTextColor={'#8E8E8E'}
+                    />
+                    <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
+                        <Text style={styles.loginText}>
+                            log in
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={handleCreateAcc}>
+                    <Text style={styles.noAccText}>
+                        create an account
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 20,
     paddingLeft: 15,
-    font: 'Lato'
+    fontFamily: 'Lato'
   },
   loginButton: {
     backgroundColor: '#7990E0',
@@ -114,6 +125,13 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontFamily: 'Lato-Bold',
     fontSize: 20,
+  },
+  noAccText: {
+    color: "#fff",
+    fontFamily: 'Lato-Bold',
+    fontSize: 20,
+    marginTop: 10,
+    textAlign: 'center'
   }
 });
 
