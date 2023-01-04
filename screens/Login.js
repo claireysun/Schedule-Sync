@@ -1,9 +1,9 @@
-import React from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Alert, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
-// SplashScreen.preventAutoHideAsync();
 
 // iOS: view -> UIView
 // android: view -> androidView
@@ -11,41 +11,59 @@ import * as SplashScreen from 'expo-splash-screen';
 // and translates stuff for us
 const Login = () => {
     const [fontsLoaded] = useFonts({
-        'Lato': require('./assets/fonts/Lato/Lato-Regular.ttf'),
-        'Lato-Bold': require('./assets/fonts/Lato/Lato-Bold.ttf')
+        'Lato': require('../assets/fonts/Lato/Lato-Regular.ttf'),
+        'Lato-Bold': require('../assets/fonts/Lato/Lato-Bold.ttf')
     });
 
     const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                console.log("logout detected");
+                navigation.navigate("Schedule");
+            }
+        })
+        return unsubscribe;
+    }, [])
 
     const handleSubmit = () => {
         if (email == "" || password == "") {
             Alert.alert('Please fill in all fields');
         }
         else {
-            Alert.alert('TODO: process info...');
             console.log("email:", email);
             console.log("password:", password);
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // signed in
+                    const user = userCredential.user;
+                    console.log(user.email);
+                    navigation.navigate("Schedule");
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    Alert.alert(errorMessage);
+                });
         }
     }
 
     const handleCreateAcc = () => {
-        Alert.alert('TODO: new acc...');
+        navigation.navigate("Signup");
     }
 
-    // const onLayoutRootView = React.useCallback(async () => {
-    //     if (fontsLoaded) {
-    //       await SplashScreen.hideAsync();
-    //     }
-    // }, [fontsLoaded]);
-
     if (!fontsLoaded) {
-        console.log("erorr: font failed to load");
+        console.log("error: font failed to load");
         return null;
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding"> 
             <View>
                 <View style={styles.card}>
                     <Text style={styles.titleText}>hello again!</Text>
@@ -75,7 +93,7 @@ const Login = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 }
 
