@@ -79,6 +79,7 @@ const Login = () => {
                         onChangeText={onChangePassword}
                         value={password}
                         style={styles.inputText}
+                        secureTextEntry={true}
                         placeholderTextColor={'#8E8E8E'}
                     />
                     <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>

@@ -55,7 +55,7 @@ const Signup = () => {
     }
 
     if (!fontsLoaded) {
-        console.log("erorr: font failed to load");
+        console.log("error: font failed to load");
         return null;
     }
 

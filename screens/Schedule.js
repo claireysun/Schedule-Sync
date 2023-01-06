@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Alert, KeyboardAvoidingView } from 'react-native';
+import Course from '../components/Course';
 import { useNavigation } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { signOut } from "firebase/auth";
@@ -32,7 +33,7 @@ const Schedule = () => {
     }
 
     if (!fontsLoaded) {
-        console.log("erorr: font failed to load");
+        console.log("error: font failed to load");
         return null;
     }
 
@@ -41,9 +42,33 @@ const Schedule = () => {
             <View>
             <TouchableOpacity onPress={handleSubmit}>
                 <Text>
-                    log in
+                    log out button
                 </Text>
             </TouchableOpacity>
+            
+
+
+            <Course 
+                subject={'EECS'}
+                cat_num={'280'}
+                comp={'LEC'}
+                time={'1:30-2:30 PM'}
+                attending={true}
+                enable_edit={false}/>
+            <Course 
+                subject={'EECS'}
+                cat_num={'280'}
+                comp={'LAB'}
+                time={'1:30-2:30 PM'}
+                attending={true}
+                enable_edit={false}/>
+            <Course 
+                subject={'EECS'}
+                cat_num={'281'}
+                comp={'LEC'}
+                time={'2:30-4:30 PM'}
+                attending={true}
+                enable_edit={false}/>
             </View>
         </KeyboardAvoidingView>
     );
@@ -56,6 +81,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    weekdayText: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 365,
+        height: 65,
+        fontSize: 24,
+        fontFamily: 'Lato-Bold',
+    }
 });
 
 export default Schedule;
